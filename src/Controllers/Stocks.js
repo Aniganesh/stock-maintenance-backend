@@ -12,7 +12,13 @@ export const getStocks = async (req, res) => {
 
 export const addStock = async (req, res) => {
 	const { body } = req
+	console.log("received", body)
+	if (!body.name || !body.price || !body.unitsAvailable) {
+		res.status(409).json({ message: "name, price and unitsAvailable are required fields" })
+		return
+	}
 	const newStock = new Stock(body)
+
 	try {
 		await newStock.save()
 		res.status(201).json(newStock)
@@ -22,7 +28,24 @@ export const addStock = async (req, res) => {
 }
 
 
-export const deleteStock = (req, res) => {
-	res.send('API is running')
+export const deleteStock = async (req, res) => {
+	const { body } = req
+	const { id } = body
+	if (!id) {
+		res.status(400).json({ message: "id is a required field" })
+		return
+	}
+	try {
+		await Stock.deleteOne({ _id: id }, (err) => {
+			if (err) {
+				console.log({ err });
+				res.status(400).json({ message: err.message })
+			}
+		})
+		res.status(200).json(`Item with id ${id} deleted`)
+	} catch (err) {
+		console.log({ err });
+		res.status(400).json({ message: err.message })
+	}
 }
 
