@@ -49,3 +49,31 @@ export const deleteStock = async (req, res) => {
 	}
 }
 
+export const updateStock = async (req, res) => {
+	const { body } = req
+	const { id } = body
+	if (!id) {
+		res.status(400).json({ message: "id is a required field" })
+		return
+	}
+	try {
+		Stock.findOne({ _id: id }).then(async (stock) => {
+			if (body.name) {
+				stock['name'] = body.name
+			}
+			if (body.tag) {
+				stock['tag'] = body.tag
+			}
+			if (body.price) {
+				stock['price'] = body.price
+			}
+			if (body.unitsAvailable) {
+				stock['unitsAvailable'] = body.unitsAvailable
+			}
+			await stock.save()
+			res.status(200).json(stock)
+		})
+	} catch (err) {
+		res.status(409).json({ message: err.message })
+	}
+}
