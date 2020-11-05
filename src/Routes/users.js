@@ -3,6 +3,6 @@ import { findUser } from '../Controllers/users.js'
 
 const router = express.Router()
 
-router.get('/', findUser)
+router.post('/', findUser)
 
 export default router
