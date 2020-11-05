@@ -29,7 +29,7 @@ export const deleteTag = async (req, res) => {
 		return
 	}
 	try {
-		await Stock.deleteOne({ _id: id }, (err) => {
+		await Tag.deleteOne({ _id: id }, (err) => {
 			if (err) {
 				console.log({ err });
 				res.status(400).json({ message: err.message })
