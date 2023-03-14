@@ -17,7 +17,7 @@ app.use('/stocks', stockRoutes)
 app.use('/tags', tagRoutes)
 app.use('/users', userRoutes)
 
-const CONNECTION_URL = "mongodb+srv://aniruddha:aniruddha123456@cluster0.shzeo.mongodb.net/stock-maintenance?retryWrites=true&w=majority";
+const CONNECTION_URL = "mongodb+srv://username:password@cluster0.shzeo.mongodb.net/stock-maintenance?retryWrites=true&w=majority";
 // const CONNECTION_URL = 'mongodb://127.0.0.1:27017/stockMaintenance'
 mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => { app.listen(PORT, () => { console.log(`API running on ${PORT}`) }) })
